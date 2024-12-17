@@ -29,6 +29,7 @@ export function _update(source) {
     maxDepthNodeColor,
     cyclicNodeColor,
     selectedNodeColor,
+    selectedNodeStrokeColor,
     missingNodeColor,
     horizontalSpaceBetweenNodes,
     textStyleColor,
@@ -185,8 +186,27 @@ export function _update(source) {
   nodeUpdate
     .select('circle')
     .attr('r', circleSize)
+    .style('stroke', d => {
+      // abnormal nodes don't have a circle border
+      // so we just fill this color with the same
+      // color creating a solid dot
+      if (d.data['Automated Note']) {
+        if (d.data._maxDepth) {
+          return maxDepthNodeColor;
+        } else if (d.data._cyclic) {
+          return cyclicNodeColor;
+        } else if (d.data._missing) {
+          return missingNodeColor;
+        }
+      }
+
+      if (this.selectedNode && d.data._name === this.selectedNode._name) {
+        return selectedNodeStrokeColor;
+      }
+
+      return circleStrokeColor;
+    })
     .style('fill', d => {
-      // console.log(d);
       if (d.data['Automated Note']) {
         if (d.data._maxDepth) {
           return maxDepthNodeColor;

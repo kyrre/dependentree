@@ -48,6 +48,7 @@ const defaultOptions = {
   closedNodeCircleColor: 'lightsteelblue',
   openNodeCircleColor: 'white',
   cyclicNodeColor: '#FF4242',
+  selectedNodeStrokeColor: '#0f4e82',
   selectedNodeColor: '#0f4e82',
   missingNodeColor: '#E8F086',
   maxDepthNodeColor: '#A691AE',

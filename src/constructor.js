@@ -26,7 +26,6 @@ export function _constructor(selector, userOptions = {}) {
   this.elementSelectorString = selector;
   this.passedContainer = d3.select(selector);
   this.passedContainerEl = this.passedContainer.node();
-  this.selectedNode = null;
 
   if (!this.passedContainerEl) {
     throw new Error(

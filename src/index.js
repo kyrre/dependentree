@@ -16,6 +16,18 @@
  *
  */
 
+import * as clone from './clone';
+import * as constructor from './constructor';
+import * as addEntities from './add-entities';
+import * as helpers from './helpers';
+import * as mouse from './mouse';
+import * as options from './options';
+import * as text from './text';
+import * as treeHelpers from './tree-helpers';
+import * as setTree from './set-tree';
+import * as update from './update';
+import * as validate from './validate';
+
 
 class DependenTree {
   constructor(elementSelectorString, userOptions) {
@@ -30,22 +42,24 @@ class DependenTree {
     this.dupDeps = [];
     this.keysMemo = {};
     this.clones = [];
+  this.selectedNode = null;
   }
 };
 
+
 Object.assign(
   DependenTree.prototype,
-  require('./clone'),
-  require('./constructor'),
-  require('./add-entities'),
-  require('./helpers'),
-  require('./mouse'),
-  require('./options'),
-  require('./text'),
-  require('./tree-helpers'),
-  require('./set-tree'),
-  require('./update'),
-  require('./validate'),
+  clone,
+  constructor,
+  addEntities,
+  helpers,
+  mouse,
+  options,
+  text,
+  treeHelpers,
+  setTree,
+  update,
+  validate,
 );
 
 export default DependenTree;
