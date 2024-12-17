@@ -111,3 +111,11 @@ export function _diagonal(s, d) {
     C ${(s.y + d.y) / 2} ${s.x}, ${(s.y + d.y) / 2} ${d.x}, ${d.y} ${d.x}
   `;
 }
+
+
+// Set the selected node to the node that was clicked on
+export function _nodeSelectionClick(event, d) {
+  this.selectedNode = d.data;
+  console.debug('nodeSelection call!');
+  this._update(d);
+}

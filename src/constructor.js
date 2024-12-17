@@ -19,15 +19,18 @@
 import * as d3 from 'd3';
 
 // takes a W3C Selector String
-export function _constructor(elementSelectorString, userOptions = {}) {
+export function _constructor(selector, userOptions = {}) {
 
-  this.elementSelectorString = elementSelectorString;
-  this.passedContainer = d3.select(elementSelectorString);
+  console.debug('_constructor call!');
+
+  this.elementSelectorString = selector;
+  this.passedContainer = d3.select(selector);
   this.passedContainerEl = this.passedContainer.node();
+  this.selectedNode = null;
 
   if (!this.passedContainerEl) {
     throw new Error(
-      `An element could not be selected from the given selector string "${elementSelectorString}". Please refer to https://www.w3.org/TR/selectors-api/ and ensure the element is on the page.`,
+      `An element could not be selected from the given selector string "${selector}". Please refer to https://www.w3.org/TR/selectors-api/ and ensure the element is on the page.`,
     );
   }
 
@@ -43,7 +46,7 @@ export function _constructor(elementSelectorString, userOptions = {}) {
   // Another container element is made to be put inside of the passed container
   this.containerDiv = document.createElement('div');
   this.passedContainerEl.appendChild(this.containerDiv);
-  this.container = d3.select(`${elementSelectorString} > div`);
+  this.container = d3.select(this.containerDiv);
 
 
   this._setOptions(userOptions);

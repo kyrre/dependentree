@@ -19,6 +19,7 @@
 // source refers to the ancestor node that this node is
 // currently entering from
 export function _update(source) {
+
   const {
     animationDuration,
     parentNodeTextOrientation,
@@ -27,6 +28,7 @@ export function _update(source) {
     closedNodeCircleColor,
     maxDepthNodeColor,
     cyclicNodeColor,
+    selectedNodeColor,
     missingNodeColor,
     horizontalSpaceBetweenNodes,
     textStyleColor,
@@ -47,6 +49,10 @@ export function _update(source) {
   } = this.options;
 
   const boundClick = this._click.bind(this);
+
+  // add a click event to the node selection
+  const nodeSelectionClick = this._nodeSelectionClick.bind(this);
+
   this.treeData = this.treeMap(this.root);
 
   // Tree data descendants gets all the nodes that are visible on the page.
@@ -108,7 +114,8 @@ export function _update(source) {
   // Add Circle for the nodes
   nodeEnter
     .append('circle')
-    .on('click', boundClick)
+    .on('dblclick', boundClick) // changed to double click
+    .on('click', (event, d) => nodeSelectionClick(event, d))
     .attr('r', 1e-6)
     .style('stroke', d => {
       // abnormal nodes don't have a circle border
@@ -137,6 +144,7 @@ export function _update(source) {
         }
         return circleStrokeColor;
       }
+
       return d._children ? closedNodeCircleColor : openNodeCircleColor;
     });
 
@@ -178,6 +186,7 @@ export function _update(source) {
     .select('circle')
     .attr('r', circleSize)
     .style('fill', d => {
+      // console.log(d);
       if (d.data['Automated Note']) {
         if (d.data._maxDepth) {
           return maxDepthNodeColor;
@@ -189,6 +198,13 @@ export function _update(source) {
           return circleStrokeColor;
         }
       }
+
+      if (this.selectedNode && d.data._name === this.selectedNode._name) {
+        console.log('huenoe');
+        return selectedNodeColor;
+      }
+
+
       return d._children ? closedNodeCircleColor : openNodeCircleColor;
     });
 
