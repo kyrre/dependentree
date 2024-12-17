@@ -114,8 +114,13 @@ export function _diagonal(s, d) {
 
 
 // Set the selected node to the node that was clicked on
-export function _nodeSelectionClick(event, d) {
+export function _setSelectedNode(event, d, callback) {
   this.selectedNode = d.data;
-  console.debug('nodeSelection call!');
   this._update(d);
+
+  if (callback !== null) {
+    callback(d.data);
+  }
+
+
 }

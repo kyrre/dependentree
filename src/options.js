@@ -24,6 +24,7 @@ const defaultOptions = {
   enableTooltipKey: true,
   modifyEntityName: null,
   textClick: null,
+  nodeClick: null,
   maxDepthMessage: null,
   missingEntityMessage: null,
   cyclicDependencyMessage: null,

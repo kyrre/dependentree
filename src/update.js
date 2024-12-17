@@ -43,6 +43,7 @@ export function _update(source) {
     enableTooltip,
     modifyEntityName,
     textClick,
+    nodeClick,
     marginTop,
     marginBottom,
     marginLeft,
@@ -51,8 +52,8 @@ export function _update(source) {
 
   const boundClick = this._click.bind(this);
 
-  // add a click event to the node selection
-  const nodeSelectionClick = this._nodeSelectionClick.bind(this);
+  // add a click event to "the node selection"
+  const setSelectedNode = this._setSelectedNode.bind(this);
 
   this.treeData = this.treeMap(this.root);
 
@@ -116,7 +117,7 @@ export function _update(source) {
   nodeEnter
     .append('circle')
     .on('dblclick', boundClick) // changed to double click
-    .on('click', (event, d) => nodeSelectionClick(event, d))
+    .on('click', (event, d) => setSelectedNode(event, d, nodeClick))
     .attr('r', 1e-6)
     .style('stroke', d => {
       // abnormal nodes don't have a circle border
@@ -220,7 +221,6 @@ export function _update(source) {
       }
 
       if (this.selectedNode && d.data._name === this.selectedNode._name) {
-        console.log('huenoe');
         return selectedNodeColor;
       }
 
