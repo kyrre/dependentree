@@ -23,11 +23,12 @@ module.exports = {
   },
   output: {
     library: {
-      name: 'DependenTree',
-      export: 'default',
-      type: 'umd',
+      type: 'module',  // Changed from 'umd' to 'module'
     },
     globalObject: 'this',
   },
   plugins: [new webpack.BannerPlugin(copyright)],
+  experiments: {
+    outputModule: true,  // Enable ESM output
+  },
 };

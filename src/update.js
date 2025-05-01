@@ -18,6 +18,9 @@
 
 // source refers to the ancestor node that this node is
 // currently entering from
+
+import * as d3 from 'd3';
+
 export function _update(source) {
 
   const {
@@ -44,6 +47,7 @@ export function _update(source) {
     modifyEntityName,
     textClick,
     nodeClick,
+    contextMenuClick,
     marginTop,
     marginBottom,
     marginLeft,
@@ -54,6 +58,7 @@ export function _update(source) {
 
   // add a click event to "the node selection"
   const setSelectedNode = this._setSelectedNode.bind(this);
+  const contextClick = this._contextClick.bind(this);
 
   this.treeData = this.treeMap(this.root);
 
@@ -86,8 +91,8 @@ export function _update(source) {
   let nodeLeft = this.root;
   let nodeRight = this.root;
   this.root.eachBefore(node => {
-    if (node.x < nodeLeft.x) {nodeLeft = node;}
-    if (node.x > nodeRight.x) {nodeRight = node;}
+    if (node.x < nodeLeft.x) { nodeLeft = node; }
+    if (node.x > nodeRight.x) { nodeRight = node; }
   });
   const height = nodeRight.x - nodeLeft.x + marginTop + marginBottom;
 
@@ -116,8 +121,11 @@ export function _update(source) {
   // Add Circle for the nodes
   nodeEnter
     .append('circle')
-    .on('dblclick', boundClick) // changed to double click
-    .on('click', (event, d) => setSelectedNode(event, d, nodeClick))
+    .on('dblclick', boundClick)
+    .on('click', (event, node) => setSelectedNode(event, node, nodeClick))
+    .on('contextmenu', (event, node) => {
+      contextClick(event, node, contextMenuClick);
+    })
     .attr('r', 1e-6)
     .style('stroke', d => {
       // abnormal nodes don't have a circle border
@@ -166,8 +174,7 @@ export function _update(source) {
     .attr('fill', textStyleColor)
     .text(d => this._filterScriptInjection(modifyEntityName ? modifyEntityName(d.data) : d.data._name))
     .style('fill-opacity', 1e-6)
-    .style('font', textStyleFont)
-    .on('click', boundClick);
+    .style('font', textStyleFont);
 
   if (textClick) {
     text.on('click', (event, node) => textClick(event, node.data));
@@ -228,7 +235,7 @@ export function _update(source) {
       return d._children ? closedNodeCircleColor : openNodeCircleColor;
     });
 
-    nodeUpdate.select('text').style('fill-opacity', 1)
+  nodeUpdate.select('text').style('fill-opacity', 1)
 
   if (enableTooltip) {
     nodeUpdate

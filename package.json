@@ -13,7 +13,7 @@
   "sideEffects": false,
   "scripts": {
     "start": "yarn serve & yarn build-watch",
-    "serve": "live-server dev",
+    "serve": "live-server dev --cors --watch",
     "lint": "eslint --cache .",
     "lint-fix": "yarn lint --fix",
     "dev-init": "mkdir dev/ & yarn dev-copy-html & yarn build-dev-data",

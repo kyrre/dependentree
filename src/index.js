@@ -42,7 +42,7 @@ class DependenTree {
     this.dupDeps = [];
     this.keysMemo = {};
     this.clones = [];
-  this.selectedNode = null;
+    this.selectedNode = null;
   }
 };
 

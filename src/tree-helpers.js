@@ -121,6 +121,32 @@ export function _setSelectedNode(event, d, callback) {
   if (callback !== null) {
     callback(d.data);
   }
+}
 
 
+// Handle right-click or context menu events on nodes
+export function _contextClick(event, d, callback) {
+  event.preventDefault();
+  this._update(d);
+
+  if (callback !== null) {
+    callback(event, d);
+  }
+}
+
+// Expand all children of a specified node
+export function expandNode(node, levelsOfNodes = 3) {
+  console.log(node)
+  if (!node) { return; }
+
+  if (node._children) {
+    node.children = node._children;
+    node._children = null;
+  }
+
+  this._update(node);
+
+  if (node.children && levelsOfNodes > 1) {
+    node.children.forEach(child => this._delayExpand(child, levelsOfNodes - 1));
+  }
 }

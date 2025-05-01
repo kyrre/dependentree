@@ -6,3 +6,4 @@ dev/
 tests/page/
 .eslintcache
 yarn-error.log
+dev/data.json

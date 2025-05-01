@@ -21,8 +21,6 @@ import * as d3 from 'd3';
 // takes a W3C Selector String
 export function _constructor(selector, userOptions = {}) {
 
-  console.debug('_constructor call!');
-
   this.elementSelectorString = selector;
   this.passedContainer = d3.select(selector);
   this.passedContainerEl = this.passedContainer.node();
